@@ -94,4 +94,19 @@ public class ProjectService {
 			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
+
+	public ResponseEntity<Project> assignManagerToProject(Long projectId, String employeeId) {
+		try {
+			final Optional<Project> _existingProject = projectRepository.findById(projectId);
+			if (_existingProject.isPresent()) {
+				Project _project = _existingProject.get();
+				_project.setProjectManager(employeeId.toString());
+				projectRepository.save(_project);
+				return new ResponseEntity<>(_project, HttpStatus.OK);
+			}
+		} catch (final Exception e) {
+			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+	}
 }

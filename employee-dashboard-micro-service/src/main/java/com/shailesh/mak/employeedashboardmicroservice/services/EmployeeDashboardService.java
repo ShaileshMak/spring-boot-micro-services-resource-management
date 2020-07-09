@@ -120,4 +120,22 @@ public class EmployeeDashboardService {
 		System.out.println(newProject.toString());
 		return newProject;
 	}
+
+	public Project assignManagerToProject(String projectId, String employeeId) {
+		final MultiValueMap<String, String> projectMap = new LinkedMultiValueMap<>();
+		projectMap.add("employeeId", employeeId);
+		projectMap.add("projectId", projectId);
+
+		final HttpHeaders headers = new HttpHeaders();
+		headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
+		final HttpEntity<MultiValueMap<String, String>> projectEntity = new HttpEntity<MultiValueMap<String, String>>(
+				projectMap, headers);
+
+		final ResponseEntity<Project> updatedProject = restTemplate.exchange(
+				"http://localhost:8083/api/projects/manager/" + Long.parseLong(projectId) + "/" + employeeId, HttpMethod.PUT, projectEntity,
+				Project.class);
+		final Project newProject = updatedProject.getBody();
+		System.out.println(newProject.toString());
+		return newProject;
+	}
 }

@@ -61,7 +61,7 @@ export default class Project extends Component {
             </Col>
             {projects && projects.length > 0 ? (
               <Col xs="12" sm="6">
-                <Projects projects={projects} employees={employees} />
+                <Projects projects={projects} employees={employees} onProjectUpdate={this.getProjects} />
               </Col>
             ) : null}
           </Row>

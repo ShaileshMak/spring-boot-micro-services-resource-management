@@ -38,6 +38,12 @@ public class DashboardController {
 		return employeeDashboardService.assignProjectToEmployee(projectId, employeeId, employee);
 	}
 
+	@PutMapping("/projects/manager/{projectId}/{employeeId}")
+	public Project assignManagerToProject(@PathVariable final String projectId,
+										   @PathVariable final String employeeId) {
+		return employeeDashboardService.assignManagerToProject(projectId, employeeId);
+	}
+
 	@GetMapping("/employees/employee/{employeeId}")
 	public Employee getEmployee(@PathVariable final String employeeId) {
 		return employeeDashboardService.getEmployeeItem(employeeId);
