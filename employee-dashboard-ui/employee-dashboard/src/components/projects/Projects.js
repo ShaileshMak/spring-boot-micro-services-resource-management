@@ -18,16 +18,31 @@ export default class projects extends Component {
         this.handleProjectDDChange = this.handleProjectDDChange.bind(this);
     }
 
+    componentWillReceiveProps = (nextProps) => {
+        const currentProjectIndex = this.state.project;
+        const filterProjects = nextProps.projects.filter(project => {
+            return (project.projectName === currentProjectIndex);
+        });
+        const selectedProject = filterProjects && filterProjects.length> 0 && filterProjects[0]
+        this.setState({
+            project: selectedProject.projectName,
+            selectedProject: selectedProject
+        });
+    }
+
     getprojectById = id => {
         const project = this.props.projects.filter(project => parseInt(project.projectId) === parseInt(id));
         return project[0];
     }
 
     handleProjectDDChange = (event) => {
-        debugger;
         const { target } = event;
         const value = target.value;
-        const selectedProject = this.props.projects[parseInt(value)];
+        this.updateProjectDetails(value);
+    }
+
+    updateProjectDetails = index => {
+        const selectedProject = this.props.projects[parseInt(index)];
         if (selectedProject.projectManager) {
             const projectManager = this.getProjectManager(parseInt(selectedProject.projectManager));
             selectedProject.projectManagerName = `${projectManager.firstName} ${projectManager.lastName}`;
@@ -37,11 +52,12 @@ export default class projects extends Component {
             selectedProject: selectedProject
         });
     }
+
     projectToggle = () => this.setState({projectDropdownOpen : !this.state.projectDropdownOpen});
 
     getProjectManager = managerId => {
         const manager = this.props.employees.filter(employee => parseInt(employee.employeeId) === parseInt(managerId));
-        return manager[0];
+        return (manager && manager.length > 0 && manager[0]) || null;
     }
     render() {
         const { 
@@ -50,7 +66,9 @@ export default class projects extends Component {
             selectedProject
         } = this.state;
         const {
-            projects
+            projects,
+            employees,
+            onProjectUpdate
         } = this.props;
 
         const projectProps = {
@@ -86,7 +104,7 @@ export default class projects extends Component {
                 {selectedProject ? (
                     <Row>
                         <Col>
-                            <ProjectDetails project={selectedProject} projectManager={this.getProjectManager(selectedProject.projectManager)}/>
+                            <ProjectDetails project={selectedProject} projectManager={this.getProjectManager(selectedProject.projectManager)} employees={employees} onProjectUpdate={onProjectUpdate} />
                         </Col>
                     </Row>
                 ) : null}

@@ -96,7 +96,6 @@ export default class EmployeeDetails extends Component {
         const projectName = (this.state.updatedProject && this.state.updatedProject.projectName) || (this.props.project && this.props.project.projectName) || '';
         const projectDes = (this.state.updatedProject && this.state.updatedProject.projectDes) || (this.props.project && this.props.project.projectDes) || '';
         const getProjectManagerName = () => {
-            debugger;
             if (!this.props.project) return;
             const manager = this.getProjectManager(this.props.project.projectManager);
             const pmName = `${manager.firstName} ${manager.lastName}`;
