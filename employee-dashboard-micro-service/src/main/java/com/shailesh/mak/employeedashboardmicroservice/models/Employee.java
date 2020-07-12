@@ -27,6 +27,20 @@ public class Employee {
 	public Employee() {
 	}
 
+	public Employee(String employeeId, Project project, String firstName, String lastName, LocalDate dateOfBirth, Double salary, Integer age, String lob, String department, String projectId) {
+		this.id = UUID.randomUUID();
+		this.employeeId = employeeId;
+		this.project = project;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.dateOfBirth = dateOfBirth;
+		this.salary = salary;
+		this.age = age;
+		this.lob = lob;
+		this.department = department;
+		this.projectId = projectId;
+	}
+
 	public UUID getId() {
 		return id;
 	}
