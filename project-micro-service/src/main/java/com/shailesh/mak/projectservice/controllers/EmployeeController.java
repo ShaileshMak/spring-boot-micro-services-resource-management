@@ -23,7 +23,7 @@ public class EmployeeController {
 	private EmployeeService employeeService;
 
 	@PostMapping("/employees/employee")
-	public ResponseEntity<Employee> setEdmployee(
+	public ResponseEntity<Employee> setEmployee(
 			@RequestBody @DateTimeFormat(pattern = "dd.MM.yyyy") final Employee employee) {
 		return employeeService.setEmployee(employee);
 	}
